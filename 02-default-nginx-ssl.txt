@@ -1,0 +1,22 @@
+# /etc/nginx/site-enabled/default
+# https & ssl
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+
+    server_name _;	
+    ssl_certificate /etc/nginx/ssl/gt-cert.crt;
+    ssl_certificate_key /etc/nginx/ssl/gt-cert.prv;
+
+    location / {
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+    }
+}
